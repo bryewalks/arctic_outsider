@@ -12,6 +12,8 @@ class Api::ArticlesController < ApplicationController
                               user_id: params[:user_id]
                               )
     
+    @article.images.attach(params[:article][:images])
+    
     if @article.save
       render 'show.json.jbuilder'
     else
