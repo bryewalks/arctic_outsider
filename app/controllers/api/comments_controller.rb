@@ -1,4 +1,8 @@
 class Api::CommentsController < ApplicationController
+
+  before_action :authenticate_user, except: [:index, :show]
+  before_action :authenticate_admin, only: [:destroy]
+
   def index
     @comments = Comment.all
     render 'index.json.jbuilder'
@@ -7,8 +11,8 @@ class Api::CommentsController < ApplicationController
   def create
     @comment = Comment.new(
                               body: params[:body],
-                              user_id: params[:user_id],
-                              article_id: params[:article_id],
+                              user_id: current_user.id,
+                              article_id: params[:article_id]
                               )
     
     if @comment.save
