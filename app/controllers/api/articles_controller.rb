@@ -1,4 +1,7 @@
 class Api::ArticlesController < ApplicationController
+
+  before_action :authenticate_admin, except: [:index, :show]
+
   def index
     @articles = Article.all
     render 'index.json.jbuilder'
@@ -9,10 +12,11 @@ class Api::ArticlesController < ApplicationController
                               title: params[:title],
                               body: params[:body],
                               category: params[:category],
-                              user_id: params[:user_id]
+                              user_id: current_user.id
                               )
-    
-    @article.images.attach(params[:article][:images])
+    if params[:images]
+      @article.images.attach(params[:article][:images])
+    end
     
     if @article.save
       render 'show.json.jbuilder'
