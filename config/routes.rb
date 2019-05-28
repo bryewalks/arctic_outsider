@@ -20,4 +20,5 @@ Rails.application.routes.draw do
     patch "/comments/:id" => 'comments#update'
     delete "/comments/:id" => 'comments#destroy'
   end
+  get "/*path" => proc { [200, {}, [ActionView::Base.new.render(file: 'public/index.html')]] } 
 end

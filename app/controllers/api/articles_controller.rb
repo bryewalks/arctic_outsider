@@ -1,6 +1,6 @@
 class Api::ArticlesController < ApplicationController
-
-  before_action :authenticate_admin, except: [:index, :show]
+  skip_before_action :verify_authenticity_token
+  # before_action :authenticate_admin, except: [:index, :show]
 
   def index
     @articles = Article.all
@@ -8,21 +8,24 @@ class Api::ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(
-                              title: params[:title],
-                              body: params[:body],
-                              category: params[:category],
-                              user_id: current_user.id
-                              )
-    if params[:images]
-      @article.images.attach(params[:article][:images])
-    end
+    @article = Article.create!(article_params)
+    # @article = Article.new(
+    #                           title: params[:title],
+    #                           body: params[:body],
+    #                           category: params[:category],
+    #                           user_id: 1,
+    #                           image: params[:image]
+    #                           )
+    # @article.image.attach(params[:image])
+    # photo = params[:image]
     
-    if @article.save
+    # if @article.save
+      # if photo
+      # end
       render 'show.json.jbuilder'
-    else
-      render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
-    end
+    # else
+    #   render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
+    # end
   end
 
   def show
@@ -50,4 +53,11 @@ class Api::ArticlesController < ApplicationController
     article.destroy
     render json: {message: "Successfully removed article."}
   end
+
+  private
+
+  def article_params
+    params.require(:article).permit(:title, :body, :category, :user_id, :image)
+  end
+
 end
