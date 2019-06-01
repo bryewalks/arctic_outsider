@@ -1,5 +1,4 @@
 class Api::CommentsController < ApplicationController
-
   before_action :authenticate_user, except: [:index, :show]
   before_action :authenticate_admin, only: [:destroy]
 
@@ -9,11 +8,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @comment = Comment.new(
-                              body: params[:body],
-                              user_id: current_user.id,
-                              article_id: params[:article_id]
-                              )
+    @comment = Comment.new(comment_params)
     
     if @comment.save
       render 'show.json.jbuilder'
@@ -46,4 +41,11 @@ class Api::CommentsController < ApplicationController
     comment.destroy
     render json: {message: "Successfully removed comment."}
   end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:body, :user_id, :article_id)
+  end
+
 end

@@ -1,24 +1,12 @@
 Rails.application.routes.draw do
 
   namespace :api do
-
-    post "/users" => "users#create"
-
-    post "/sessions" => "sessions#create"
-    
-    get "/articles" => 'articles#index'
-    get '/articles/new' => 'articles#new'
-    post "/articles" => 'articles#create'
-    get "/articles/:id" => 'articles#show'
-    patch "/articles/:id" => 'articles#update'
-    delete "/articles/:id" => 'articles#destroy'
-
-    get "/comments" => 'comments#index'
-    get '/comments/new' => 'comments#new'
-    post "/comments" => 'comments#create'
-    get "/comments/:id" => 'comments#show'
-    patch "/comments/:id" => 'comments#update'
-    delete "/comments/:id" => 'comments#destroy'
+    resources :sessions, only: [:create]
+    resources :users, only: [:create]
+    resources :articles
+    resources :comments
   end
-  get "/*path" => proc { [200, {}, [ActionView::Base.new.render(file: 'public/index.html')]] } 
+  get "/*path" => proc { [200, {}, [ActionView::Base.new.render(file: 'public/index.html')]] }, constraints: lambda { |req|
+        req.path.exclude? 'rails/active_storage'
+    } 
 end
