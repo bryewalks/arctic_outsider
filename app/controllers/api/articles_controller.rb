@@ -1,6 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  before_action :authenticate_admin, except: [:index, :show]
-
+  # before_action :authenticate_admin, except: [:index, :show]
   def index
     @articles = Article.all
     render 'index.json.jbuilder'
