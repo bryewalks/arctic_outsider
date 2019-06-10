@@ -23,16 +23,20 @@ class Api::ArticlesController < ApplicationController
 
   def update
     @article = Article.find(params[:id])
-
-    @article.title = params[:title] || @article.title
-    @article.body = params[:body] || @article.body
-    @article.category = params[:category] || @article.category
-
-    if @article.save
+    if @article.update!(article_params)
       render 'show.json.jbuilder'
     else
       render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
     end
+    # @article.title = params[:title] || @article.title
+    # @article.body = params[:body] || @article.body
+    # @article.category = params[:category] || @article.category
+
+    # if @article.save
+    #   render 'show.json.jbuilder'
+    # else
+    #   render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
+    # end
   end
 
   def destroy
