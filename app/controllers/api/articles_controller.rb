@@ -28,15 +28,6 @@ class Api::ArticlesController < ApplicationController
     else
       render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
     end
-    # @article.title = params[:title] || @article.title
-    # @article.body = params[:body] || @article.body
-    # @article.category = params[:category] || @article.category
-
-    # if @article.save
-    #   render 'show.json.jbuilder'
-    # else
-    #   render json: {errors: @article.errors.full_messages}, status: :unprocessable_entity
-    # end
   end
 
   def destroy
@@ -48,7 +39,7 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :body, :category, :user_id, :image)
+    params.require(:article).permit(:title, :description, :body, :category, :user_id, :image)
   end
 
 end
