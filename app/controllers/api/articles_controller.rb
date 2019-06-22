@@ -39,7 +39,7 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :description, :body, :category, :user_id, :image)
+    params.require(:article).permit(:title, :description, :body, :category, :user_id, :image, :video_url)
   end
 
 end

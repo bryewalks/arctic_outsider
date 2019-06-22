@@ -6,6 +6,7 @@ json.category article.category
 json.created_at article.created_at.strftime("%b %d, %Y")
 json.user article.user.name
 json.image_url rails_blob_url(article.image) if article.image.attached?
+json.video_url article.video_url
 
 json.comments do
   json.array! article.comments, partial: "api/comments/comment", as: :comment
