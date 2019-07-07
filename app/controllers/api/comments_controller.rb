@@ -24,12 +24,7 @@ class Api::CommentsController < ApplicationController
 
   def update
     @comment = Comment.find(params[:id])
-
-    @comment.body = params[:body] || @comment.body
-    @comment.user_id = params[:user_id] || @comment.user_id
-    @comment.article_id = params[:article_id] || @comment.article_id
-
-    if @comment.save
+    if @comment.update!(comment_params)
       render 'show.json.jbuilder'
     else
       render json: {errors: @comment.errors.full_messages}, status: :unprocessable_entity
