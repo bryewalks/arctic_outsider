@@ -1,3 +1,5 @@
 json.id comment.id
-json.user comment.user.email
 json.body comment.body
+json.created_at comment.formatted_date
+
+json.user comment.user.name
