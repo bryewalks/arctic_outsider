@@ -8,6 +8,7 @@ json.image_url rails_blob_url(article.image) if article.image.attached?
 json.video_url article.video_url
 
 json.user article.user.name
+json.avatar_url rails_blob_url(article.user.avatar) if article.user.avatar.attached?
 
 json.comments do
   json.array! article.comments, partial: "api/comments/comment", as: :comment
