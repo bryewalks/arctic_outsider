@@ -1,5 +1,5 @@
 class Api::ArticlesController < ApplicationController
-  # before_action :authenticate_admin, except: [:index, :show]
+  before_action :authenticate_admin, except: [:index, :show]
 
   def index
     @articles = Article.all
@@ -39,7 +39,10 @@ class Api::ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :description, :body, :category, :user_id, :image, :video_url)
+    params
+      .require(:article)
+      .permit(:title, :description, :body, :category, :image, :video_url)
+      .merge(user_id: current_user.id)
   end
 
 end

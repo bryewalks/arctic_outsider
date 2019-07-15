@@ -40,7 +40,10 @@ class Api::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :user_id, :article_id)
+    params
+      .require(:comment)
+      .permit(:body, :article_id)
+      .merge(user_id: current_user.id)
   end
 
 end
