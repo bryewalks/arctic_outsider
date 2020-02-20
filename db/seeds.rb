@@ -7,7 +7,7 @@ Article.create!([
 ])
 Comment.create!([
   {body: "this article is great!", article_id: 2, user_id: 1},
-  {body: "this article is shit!", article_id: 2, user_id: 1},
+  {body: "this article is trash!", article_id: 2, user_id: 1},
   {body: "this article is A+!", article_id: 2, user_id: 1},
   {body: "this article is a fail.", article_id: 2, user_id: 1}
 ])
